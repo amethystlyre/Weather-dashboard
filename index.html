@@ -12,9 +12,9 @@
 
 </head>
 <body>
-    <header class="navbar navbar-dark bg-primary">
+    <header class="navbar navbar-dark bg-dark">
         <div class="container">
-            <h1 class="navbar-brand">Weather Dashboard</h1>
+            <h1 class="navbar-brand mx-auto fs-1">Weather Dashboard</h1>
         </div>
     </header>
 
@@ -29,18 +29,18 @@
                                 <label for="cityName">City Name</label>
                                 <input type="text" class="form-control" id="cityName" placeholder="Enter city name" required>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100 mt-4">Search</button>
+                            <button type="submit" class="btn btn-primary w-100 mt-4" id="searchbtn">Search</button>
                         </form>
                     </div>
                     <!-- Search history section -->
-                    <div id="searchHistory" class="text-center">
+                    <div id="searchHistory" class="text-center border-top pt-2">
                         <h5>Search History</h5>
                         <div class="list-group" id="history-list">
-                            <button type="button" class="list-group-item list-group-item-action my-2 bg-secondary text-light">The current button</button>
-                            <button type="button" class="list-group-item list-group-item-action my-2">A second item</button>
-                            <button type="button" class="list-group-item list-group-item-action my-2">A third button item</button>
-                            <button type="button" class="list-group-item list-group-item-action my-2">A fourth button item</button>
-                            <button type="button" class="list-group-item list-group-item-action my-2">A disabled button item</button>
+                            <button type="button" class="custombtn">The current button</button>
+                            <button type="button" class="custombtn">A second item</button>
+                            <button type="button" class="custombtn">A third button item</button>
+                            <button type="button" class="custombtn">A fourth button item</button>
+                            <button type="button" class="custombtn">A disabled button item</button>
                           </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                                 <div class="col-md-15 border">
                                     <!-- Current Weather -->
                                     <div id="currentWeather">
-                                        dfsaffdsafds
+                                        City Name, Country Code (Date) <img src="https://openweathermap.org/img/wn/10d.png" alt="Cloudy"/>
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +99,8 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     <script src="assets/js/script.js"></script>
 </body>
