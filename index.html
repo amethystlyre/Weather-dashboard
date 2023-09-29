@@ -30,25 +30,20 @@
                             <div class="form-group">
                                 <label for="cityName"> City Name <i class="fa-regular fa-circle-question customTooltip">
                                         <span class="customTooltiptext">Enter optional ISO3166 country code after city
-                                            name followed by space</span>
+                                            name followed by comma</span>
                                     </i>
 
                                 </label>
-                                <input type="text" class="form-control" id="cityName" placeholder="Eg. Melbourne Au"
+                                <input type="text" class="form-control" id="cityName" placeholder="Eg. Melbourne,Au"
                                     required>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100 mt-4" id="searchbtn">Search</button>
+                            <button type="submit" class="btn btn-primary w-100 mt-4">Search</button>
                         </form>
                     </div>
                     <!-- Search history section -->
                     <div id="searchHistory" class="text-center border-top pt-2">
                         <h5>Search History</h5>
                         <div class="list-group" id="history-list">
-                            <button type="button" class="custombtn">The current button</button>
-                            <button type="button" class="custombtn">A second item</button>
-                            <button type="button" class="custombtn">A third button item</button>
-                            <button type="button" class="custombtn">A fourth button item</button>
-                            <button type="button" class="custombtn">A disabled button item</button>
                         </div>
                     </div>
                 </div>
@@ -68,38 +63,9 @@
                         </div>
                     </div>
                     <div class="row mt-4">
-                        <!-- 5-day forecast cards -->
                         <h3>5-day forecast:</h3>
-                        <div class="col">
-                            <div class="card customCard" id="cardDay0">
-                                <!-- Forecast for day 1 -->
-
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card customCard" id="cardDay1">
-                                <!-- Forecast for day 2 -->
-
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card customCard" id="cardDay2">
-                                <!-- Forecast for day 3 -->
-
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card customCard" id="cardDay3">
-                                <!-- Forecast for day 4 -->
-
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card customCard" id="cardDay4">
-                                <!-- Forecast for day 5 -->
-
-                            </div>
-                        </div>
+                    </div>
+                    <div class="row mt-1 d-flex" id = "forecast-list">
                     </div>
                 </div>
             </div>
