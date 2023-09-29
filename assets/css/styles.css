@@ -1,24 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
-:root{
-    --bg-lightblue:rgb(181, 227, 253);
+
+:root {
+    --bg-lightblue: rgb(181, 227, 253);
 }
 
-body{
-    font-family: 'Varela Round','Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+body {
+    font-family: 'Varela Round', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-h1{
+h1 {
     font-size: 2em;
 }
-h2, h3{
+
+h2,
+h3 {
     font-weight: bold;
 }
 
-.customBg{
+.customBg {
     background-color: var(--bg-lightblue);
 }
 
-.custombtn{
+.customBtn {
     background-color: var(--bs-gray-500);
     border-radius: 10px;
     border-style: 2px solid var(--bs-gray-500);
@@ -26,11 +29,11 @@ h2, h3{
     padding: 5px;
 }
 
-.customCard{
+.customCard {
     color: var(--bs-dark);
     background-color: var(--bg-lightblue);
     padding: 5px;
-    margin: -5px;
+    margin: 5px -5px 5px -5px;
     height: 100%;
 }
 
@@ -39,33 +42,33 @@ h2, h3{
     position: relative;
     display: inline-block;
 
-  }
-  
-  /* Tooltip text */
-  .customTooltip .customTooltiptext {
+}
+
+/* Tooltip text */
+.customTooltip .customTooltiptext {
     visibility: hidden;
-    font-family: 'Varela Round','Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Varela Round', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     width: 200px;
     background-color: #555;
     color: #fff;
     text-align: center;
     padding: 5px 0;
     border-radius: 6px;
-  
+
     /* Position the tooltip text */
     position: absolute;
     z-index: 1;
     bottom: 125%;
     left: 50%;
     margin-left: -20px;
-  
+
     /* Fade in tooltip */
     opacity: 0;
     transition: opacity 0.3s;
-  }
-  
-  /* Tooltip arrow */
-  .customTooltip .customTooltiptext::after {
+}
+
+/* Tooltip arrow */
+.customTooltip .customTooltiptext::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -74,15 +77,15 @@ h2, h3{
     border-width: 5px;
     border-style: solid;
     border-color: #555 transparent transparent transparent;
-  }
-  
-  /* Show the tooltip text when you mouse over the tooltip container */
-  .customTooltip:hover .customTooltiptext {
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.customTooltip:hover .customTooltiptext {
     visibility: visible;
     opacity: 1;
-  }
+}
 
-  img{
-    width:50px;
+img {
+    width: 50px;
     height: 50px;
-  }
+}
