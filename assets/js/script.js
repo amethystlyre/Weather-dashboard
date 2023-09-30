@@ -44,7 +44,7 @@ function formSubmissionHandler(event) {
 searchHistory.addEventListener("click", buttonClickHandler);
 
 //Handle button clicks from user
- function buttonClickHandler (event) {
+function buttonClickHandler(event) {
     event.preventDefault();
     resetPageData();
 
@@ -107,17 +107,17 @@ function fetchLocationData(url) {
 //Extract coordinates based on the Geocoding API response to build URL for "5 day weather forecast" API call
 function getWeatherData(data) {
     //check if the response data is not empty
-    if(data.length==0){
+    if (data.length == 0) {
         alert("No location data found");
-        return ;
+        return;
     }
-    
+
     cityLat = data[0].lat;
     cityLon = data[0].lon;
     countryFound = data[0].country;
 
     let weatherURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${cityLat}&lon=${cityLon}&units=${tempUnit}&appid=${apiKey}`;
-    
+
     //start fetching weather data
     fetch(weatherURL)
         .then(function (response) {
@@ -134,15 +134,15 @@ function getWeatherData(data) {
         .catch((error) => {
             console.error(error);
             alert("Error on weather API call");
-        });    
+        });
 }
 
 //Function for processing the weather data list received
 function processWeatherData(data) {
     //check if the weather data returned from API is empty
-    if(data.length==0 || data.list.length==0){
+    if (data.length == 0 || data.list.length == 0) {
         alert("No weather data found");
-        return ;
+        return;
     }
 
     weatherData = data.list //should return 40 objects in array list
@@ -155,7 +155,7 @@ function processWeatherData(data) {
     for (let i = 1; i < 6; i++) {
         let forecast = dayjs().add(i, "day").format("DD/MM/YYYY");
         let firstRecord = weatherData.find((element) => dayjs.unix(element.dt).format("DD/MM/YYYY") == forecast);
-        if(firstRecord){
+        if (firstRecord) {
             forecastData.push(firstRecord);
         }
     }
@@ -167,20 +167,16 @@ function renderCurrentWeather(currentWeatherObject) {
     let date = currentWeatherObject.dt;
     let displayDateFormat = dayjs.unix(date).format("DD/MM/YYYY");
 
-    let icon = currentWeatherObject.weather["0"].icon;
-    let weatherDes = currentWeatherObject.weather["0"].description;
-
-    if(!countryCode){
+    if (!countryCode) {
         currentWeather.textContent = `${cityName}, ${countryFound} (${displayDateFormat})`;
-    }else{
+    } else {
         currentWeather.textContent = `${cityName}, ${countryCode} (${displayDateFormat})`;
     }
-    
-    var image = document.createElement("img");
-    image.setAttribute("src", `https://openweathermap.org/img/wn/${icon}.png`);
-    image.setAttribute("alt", weatherDes);
-    currentWeather.appendChild(image);
 
+    let icon = currentWeatherObject.weather["0"].icon;
+    let weatherDes = currentWeatherObject.weather["0"].description;
+    createImgElement(icon, weatherDes, currentWeather);
+    
     createTempElement(currentWeatherObject.main.temp, currentDetails);
     createHumElement(currentWeatherObject.main.humidity, currentDetails);
     createWindElement(currentWeatherObject.wind.speed, currentDetails);
@@ -199,19 +195,13 @@ function renderForecastWeather(forecastDataList) {
 
         let date = forecastDataList[i].dt;
         let displayDateFormat = dayjs.unix(date).format("DD/MM/YYYY");
-
-        let weatherDes = forecastDataList[i].weather["0"].description;
-
-        let icon = forecastDataList[i].weather["0"].icon;
-
         let dateHead = document.createElement("h4");
         dateHead.textContent = displayDateFormat;
         divCard.appendChild(dateHead);
 
-        let image = document.createElement("img");
-        image.setAttribute("src", `https://openweathermap.org/img/wn/${icon}.png`);
-        image.setAttribute("alt", weatherDes);
-        divCard.appendChild(image);
+        let weatherDes = forecastDataList[i].weather["0"].description;
+        let icon = forecastDataList[i].weather["0"].icon;
+        createImgElement(icon, weatherDes, divCard);
 
         createTempElement(forecastDataList[i].main.temp, divCard);
 
@@ -280,9 +270,9 @@ function displaySearchHistory() {
         searchButton.setAttribute("class", "customBtn");
         searchButton.setAttribute("data-city", searchList[items].city);
         searchButton.setAttribute("data-country", searchList[items].country);
-        if(!searchList[items].country){
+        if (!searchList[items].country) {
             searchButton.textContent = `${searchList[items].city}`;
-        }else{
+        } else {
             searchButton.textContent = `${searchList[items].city}, ${searchList[items].country}`;
         }
         searchHistory.appendChild(searchButton);
@@ -297,31 +287,44 @@ function resetPageData() {
     forecastDisplay.innerHTML = "";
 }
 
-function createTempElement(temp, parent){
-    if (!temp){
-    return ;}
+//Use function to create re-usable HTML elements
+function createTempElement(temp, parent) {
+    if (!temp) {
+        return;
+    }
     //metrics measurement: Celsius degrees
     let tempEl = document.createElement("p");
     tempEl.textContent = `Temperature: ${temp}℃ degrees`;
     return parent.appendChild(tempEl);
 }
 
-function createHumElement(humidity, parent){
-    if (!humidity){
-        return ;}
+function createHumElement(humidity, parent) {
+    if (!humidity) {
+        return;
+    }
     //metrics measurement: %
     let humidityEl = document.createElement("p");
     humidityEl.textContent = `Humidity: ${humidity}%`;
     return parent.appendChild(humidityEl);
 }
 
-function createWindElement(wind, parent){
-    if (!wind){
-        return ;}
+function createWindElement(wind, parent) {
+    if (!wind) {
+        return;
+    }
     //metrics measurement: meter/sec
     let windEl = document.createElement("p");
     windEl.textContent = `Wind speed: ${wind} meters/sec`;
     return parent.appendChild(windEl);
 }
 
+function createImgElement(icon, weatherDes, parent) {
+    if (!icon) {
+        return;
+    }
+    let image = document.createElement("img");
+    image.setAttribute("src", `https://openweathermap.org/img/wn/${icon}.png`);
+    image.setAttribute("alt", weatherDes);
+    parent.appendChild(image);
+}
 

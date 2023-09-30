@@ -1,4 +1,4 @@
-# weather-dashboard
+# Weather-dashboard
 A weather forecast dashboard web page that utilizes weather data provided by openweathermap.org's API.
 
 ## Description
