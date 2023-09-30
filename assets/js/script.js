@@ -73,13 +73,13 @@ function generateLocationUrl(formInput) {
         var searchString = formInput.split(",");
         cityName = searchString[0].charAt(0).toUpperCase() + searchString[0].slice(1);
         countryCode = searchString[1].toUpperCase();
-        cityLocationUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName},${countryCode}&limit=${limit}&appid=${apiKey}`;
+        cityLocationUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName},${countryCode}&limit=${limit}&appid=${apiKey}`;
         return cityLocationUrl;
     }
     else {
         cityName = formInput.charAt(0).toUpperCase() + formInput.slice(1);
         countryCode = "";
-        cityLocationUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=${limit}&appid=${apiKey}`;
+        cityLocationUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=${limit}&appid=${apiKey}`;
         return cityLocationUrl;
     }
 }
