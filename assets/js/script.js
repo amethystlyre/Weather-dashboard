@@ -1,6 +1,5 @@
 // Initialize global variables
-
-var apiKey = "f50be9a02d66256a8b3502a7e6f70428";
+var apiKey = "f50be9a02d66256a8b3502a7e6f70428"; //f50be9a02d66256a8b3502a7e6f70428
 var cityLocationUrl;
 var cityName;
 var countryCode;
@@ -91,13 +90,12 @@ function fetchLocationData(url) {
         .then(
             function (response) {
                 if (response.ok) {
-                    console.log(response);
+                    //console.log(response);
                     response.json()
                         .then(locationData => getWeatherData(locationData))
                 }
                 else {
                     alert("Error fetching location data: " + response.statusText);
-                    console.log(response.json().length);
                 }
             })
         .catch((error) => {
@@ -124,13 +122,13 @@ function getWeatherData(data) {
     fetch(weatherURL)
         .then(function (response) {
             if (response.ok) {
-                console.log(response.statusText);
+                //console.log(response.statusText);
                 response.json()
                     .then(weatherData => processWeatherData(weatherData))
             }
             else {
                 alert("Error fetching weather data: " + response.statusText);
-                console.log(response.statusText);
+                //console.log(response.statusText);
             }
         })
         .catch((error) => {
@@ -139,7 +137,7 @@ function getWeatherData(data) {
         });    
 }
 
-
+//Function for processing the weather data list received
 function processWeatherData(data) {
     //check if the weather data returned from API is empty
     if(data.length==0 || data.list.length==0){
@@ -147,17 +145,16 @@ function processWeatherData(data) {
         return ;
     }
 
-    weatherData = data.list //should return 40 items in array object
-    //find first object in the data list that relates to today's weather
-    //this is not necessarily always the first item in the list, if the API data is not up to date.
-    let todayData = weatherData.find((element) => dayjs.unix(element.dt).format("YYYY-MM-DD") == dayjs().format("YYYY-MM-DD"));
+    weatherData = data.list //should return 40 objects in array list
+    //find first object in the data list that relates to today's weather in case data not up to date
+    let todayData = weatherData.find((element) => dayjs.unix(element.dt).format("DD/MM/YYYY") == dayjs().format("DD/MM/YYYY"));
     renderCurrentWeather(todayData);
 
+    //find the first record for each consequtive day in the future
     let forecastData = [];
     for (let i = 1; i < 6; i++) {
-        let forecast = dayjs().add(i, "day").format("YYYY-MM-DD");
-        let firstRecord = weatherData.find((element) => dayjs.unix(element.dt).format("YYYY-MM-DD") == forecast);
-        //if the API data returned is not up to date, then the 5th day forecast may not be available, hence not found/"undefined".
+        let forecast = dayjs().add(i, "day").format("DD/MM/YYYY");
+        let firstRecord = weatherData.find((element) => dayjs.unix(element.dt).format("DD/MM/YYYY") == forecast);
         if(firstRecord){
             forecastData.push(firstRecord);
         }
@@ -184,20 +181,10 @@ function renderCurrentWeather(currentWeatherObject) {
     image.setAttribute("alt", weatherDes);
     currentWeather.appendChild(image);
 
-    let temp = currentWeatherObject.main.temp //metrics measurement: C degrees
-    let tempEl = document.createElement("p");
-    tempEl.textContent = `Temperature: ${temp}℃ degrees`;
-    currentDetails.appendChild(tempEl);
+    createTempElement(currentWeatherObject.main.temp, currentDetails);
+    createHumElement(currentWeatherObject.main.humidity, currentDetails);
+    createWindElement(currentWeatherObject.wind.speed, currentDetails);
 
-    let humidity = currentWeatherObject.main.humidity //metrics measurement: %
-    let humidityEl = document.createElement("p");
-    humidityEl.textContent = `Humidity: ${humidity}%`;
-    currentDetails.appendChild(humidityEl);
-
-    let wind = currentWeatherObject.wind.speed//metrics measurement: meter/sec
-    let windEl = document.createElement("p");
-    windEl.textContent = `Wind speed: ${wind} meters/sec`;
-    currentDetails.appendChild(windEl);
 }
 
 //Function for displaying forecast weather details on page
@@ -226,20 +213,11 @@ function renderForecastWeather(forecastDataList) {
         image.setAttribute("alt", weatherDes);
         divCard.appendChild(image);
 
-        let temp = forecastDataList[i].main.temp //metrics measurement: C degrees
-        let tempEl = document.createElement("p");
-        tempEl.textContent = `Temperature: ${temp}℃ degrees`;
-        divCard.appendChild(tempEl);
+        createTempElement(forecastDataList[i].main.temp, divCard);
 
-        let humidity = forecastDataList[i].main.humidity //metrics measurement: %
-        let humidityEl = document.createElement("p");
-        humidityEl.textContent = `Humidity: ${humidity}%`;
-        divCard.appendChild(humidityEl);
+        createHumElement(forecastDataList[i].main.humidity, divCard);
 
-        let wind = forecastDataList[i].wind.speed//metrics measurement: meter/sec
-        let windEl = document.createElement("p");
-        windEl.textContent = `Wind speed: ${wind} meters/sec`;
-        divCard.appendChild(windEl);
+        createWindElement(forecastDataList[i].wind.speed, divCard);
 
         divCol.appendChild(divCard);
         forecastDisplay.appendChild(divCol);
@@ -318,4 +296,32 @@ function resetPageData() {
     searchHistory.innerHTML = "";
     forecastDisplay.innerHTML = "";
 }
+
+function createTempElement(temp, parent){
+    if (!temp){
+    return ;}
+    //metrics measurement: Celsius degrees
+    let tempEl = document.createElement("p");
+    tempEl.textContent = `Temperature: ${temp}℃ degrees`;
+    return parent.appendChild(tempEl);
+}
+
+function createHumElement(humidity, parent){
+    if (!humidity){
+        return ;}
+    //metrics measurement: %
+    let humidityEl = document.createElement("p");
+    humidityEl.textContent = `Humidity: ${humidity}%`;
+    return parent.appendChild(humidityEl);
+}
+
+function createWindElement(wind, parent){
+    if (!wind){
+        return ;}
+    //metrics measurement: meter/sec
+    let windEl = document.createElement("p");
+    windEl.textContent = `Wind speed: ${wind} meters/sec`;
+    return parent.appendChild(windEl);
+}
+
 
