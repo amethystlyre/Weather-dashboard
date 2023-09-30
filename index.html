@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="card">
-                    <div class="card-header">Search for a City:</div>
+                    <div class="card-header customBg">Search for a City:</div>
                     <div class="card-body">
                         <form id="weatherForm">
                             <div class="form-group">
@@ -34,7 +34,7 @@
                                     </i>
 
                                 </label>
-                                <input type="text" class="form-control" id="cityName" placeholder="Eg. Melbourne,Au"
+                                <input type="text" class="form-control" id="cityName" placeholder="Eg. Melbourne, Au"
                                     required>
                             </div>
                             <button type="submit" class="btn btn-primary w-100 mt-4">Search</button>
@@ -56,7 +56,7 @@
                         <div class="col-md-15 border customBg">
                             <!-- Current Weather -->
                             <div>
-                                <h2 id="currentWeather">City Name, Country Code (Date)</h2>
+                                <h2 id="currentWeather">Today's Weather</h2>
                             </div>
                             <div id="currentWeatherDetail" class="h-50">
                             </div>
@@ -64,12 +64,9 @@
                     </div>
                     <!-- Forecast Weather -->
                     <div class="row mt-4">
-                        <h3>5-day forecast:</h3>
+                        <h3>5-day Forecast:</h3>
                     </div>
                     <div class="row d-flex" id="forecast-list">
-                    </div>
-                    <div class="row mt-1">Note: Depending on the weather data provided by openweathermap.org, sometimes the 5-day forecast
-                        will only show 4 future days.
                     </div>
                 </div>
             </div>

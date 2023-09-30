@@ -2,13 +2,13 @@
 
 var apiKey = "f50be9a02d66256a8b3502a7e6f70428";
 var cityLocationUrl;
-var cityName = "";
-var countryCode = "";
-var countryFound = "";
+var cityName;
+var countryCode;
+var countryFound;
 var limit = "5";
 
-var cityLat = "-37.8141705";
-var cityLon = "144.965561";
+var cityLat;
+var cityLon;
 var tempUnit = "metric";
 var weatherData;
 var searchList = [];
@@ -150,13 +150,13 @@ function processWeatherData(data) {
     weatherData = data.list //should return 40 items in array object
     //find first object in the data list that relates to today's weather
     //this is not necessarily always the first item in the list, if the API data is not up to date.
-    let todayData = weatherData.find((element) => element.dt_txt.slice(0, 10) == dayjs().format("YYYY-MM-DD"));
+    let todayData = weatherData.find((element) => dayjs.unix(element.dt).format("YYYY-MM-DD") == dayjs().format("YYYY-MM-DD"));
     renderCurrentWeather(todayData);
 
     let forecastData = [];
     for (let i = 1; i < 6; i++) {
         let forecast = dayjs().add(i, "day").format("YYYY-MM-DD");
-        let firstRecord = weatherData.find((element) => element.dt_txt.slice(0, 10) == forecast);
+        let firstRecord = weatherData.find((element) => dayjs.unix(element.dt).format("YYYY-MM-DD") == forecast);
         //if the API data returned is not up to date, then the 5th day forecast may not be available, hence not found/"undefined".
         if(firstRecord){
             forecastData.push(firstRecord);
@@ -167,8 +167,8 @@ function processWeatherData(data) {
 
 //Function for displaying current weather details on page
 function renderCurrentWeather(currentWeatherObject) {
-    let date = currentWeatherObject.dt_txt.slice(0, 10);
-    let displayDateFormat = dayjs(date).format("DD/MM/YYYY");
+    let date = currentWeatherObject.dt;
+    let displayDateFormat = dayjs.unix(date).format("DD/MM/YYYY");
 
     let icon = currentWeatherObject.weather["0"].icon;
     let weatherDes = currentWeatherObject.weather["0"].description;
@@ -210,8 +210,8 @@ function renderForecastWeather(forecastDataList) {
         let divCard = document.createElement("div");
         divCard.setAttribute("class", "card customCard");
 
-        let date = forecastDataList[i].dt_txt.slice(0, 10);
-        let displayDateFormat = dayjs(date).format("DD/MM/YYYY");
+        let date = forecastDataList[i].dt;
+        let displayDateFormat = dayjs.unix(date).format("DD/MM/YYYY");
 
         let weatherDes = forecastDataList[i].weather["0"].description;
 
